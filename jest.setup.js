@@ -1,0 +1,5 @@
+process.env.SUPABASE_URL = process.env.SUPABASE_URL || 'http://localhost'
+process.env.SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || 'test'
+process.env.SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || 'test'
+process.env.GOOGLE_GENERATIVE_AI_API_KEY = process.env.GOOGLE_GENERATIVE_AI_API_KEY || 'test'
+process.env.EMBEDDING_DIMENSIONS = process.env.EMBEDDING_DIMENSIONS || '768'
