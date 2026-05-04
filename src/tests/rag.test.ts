@@ -39,7 +39,7 @@ describe('Text-only RAG pipeline', () => {
       }),
     })
 
-    ;(genai.getAi as jest.Mock).mockReturnValue({
+    ;(genai.getAi as jest.Mock).mockResolvedValue({
       models: {
         generate: jest.fn(async () => ({ outputs: [{ content: [{ text: 'Cats are animals' }] }] })),
         embedContent: jest.fn(),

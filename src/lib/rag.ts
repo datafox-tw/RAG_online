@@ -1,5 +1,5 @@
 import { getSupabase } from './supabase'
-import { generateEmbedding, getAi } from './genai'
+import { generateEmbedding } from './genai'
 
 function dot(a: number[], b: number[]) {
   return a.reduce((s, v, i) => s + v * (b[i] ?? 0), 0)
@@ -43,29 +43,13 @@ export async function searchAndAnswer(query: string, top_k = 5) {
   // call LLM
   let answer = ''
   try {
-    const ai = getAi()
-    const response: any = await ai.models.generate({
-      model: 'gemini-2.5-flash',
-      input: prompt,
-    })
-    // attempt to extract text from common response shapes
-    if (response?.outputs?.[0]?.content) {
-      // new genai shapes
-      const cnt = response.outputs[0].content
-      if (Array.isArray(cnt)) answer = cnt.map((c: any) => c.text ?? c).join('\n')
-      else answer = cnt.text ?? String(cnt)
-    } else if (response?.candidates?.[0]?.content) {
-      answer = response.candidates[0].content
-    } else if (response?.output?.[0]?.content?.[0]?.text) {
-      answer = response.output[0].content[0].text
-    } else {
-      answer = JSON.stringify(response)
-    }
+    const { generateText } = await import('./genai')
+    answer = await generateText(prompt, 'gemini-2.5-flash')
   } catch (err: any) {
     throw new Error('LLM call failed: ' + err?.message)
   }
 
-  const sources = scored.map((s: any, i: number) => ({ document_id: s.document_id, chunk_index: s.chunk_index, score: s.score }))
+  const sources = scored.map((s: any) => ({ document_id: s.document_id, chunk_index: s.chunk_index, score: s.score }))
   return { answer, sources }
 }
 

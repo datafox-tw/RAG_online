@@ -6,8 +6,7 @@ export const runtime = 'nodejs'
 function isAllowedTextFile(file: File) {
   const name = file.name.toLowerCase()
   const allowedName = name.endsWith('.txt') || name.endsWith('.md')
-  const allowedType = file.type === 'text/plain' || file.type === 'text/markdown' || file.type === 'text/x-markdown' || file.type === ''
-  return allowedName && allowedType
+  return allowedName
 }
 
 export async function POST(req: Request) {

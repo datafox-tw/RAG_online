@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
-import { getSupabase } from '../../../../src/lib/supabase'
+import { getSupabase } from '../../../src/lib/supabase'
 
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
   try {
